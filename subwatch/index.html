@@ -3,55 +3,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SubWatch Payment Pages</title>
+    <title>SubWatch - AI-Powered Subscription Tracker</title>
+    <meta name="description" content="Never get surprised by subscription charges again. AI-powered Chrome extension that automatically detects subscriptions and sends reminders before you get charged.">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
         }
-        h1 { color: #667eea; }
-        .info-box {
-            background: #f7fafc;
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="2" fill="white" opacity="0.1"/></svg>');
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+        
+        .hero .description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: white;
+            color: #667eea;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        
+        .feature-card p {
+            color: #718096;
+            line-height: 1.7;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        
+        .step p {
+            color: #718096;
+            line-height: 1.7;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .benefit-item {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
             border-left: 4px solid #667eea;
-            padding: 16px;
-            margin: 20px 0;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
         }
-        a { color: #667eea; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        code {
-            background: #e2e8f0;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: monospace;
+        
+        .benefit-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        .benefit-item p {
+            color: #4a5568;
+            line-height: 1.7;
+        }
+        
+        /* Stats Section */
+        .stats {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: white;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 40px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            background: #2d3748;
+            color: white;
+            text-align: center;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .hero .description {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .features-grid,
+            .steps,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>SubWatch Payment Redirect Pages</h1>
-    <p>This directory contains the payment redirect pages for the SubWatch Chrome Extension.</p>
-    
-    <div class="info-box">
-        <strong>Environment:</strong> staging<br>
-        <strong>Last Updated:</strong> 2026-01-28 17:57:57<br>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>SubWatch</h1>
+            <p class="tagline">Never get surprised by subscription charges again</p>
+            <p class="description">AI-powered Chrome extension that automatically detects your subscriptions and reminds you before you get charged</p>
+            <a href="https://chromewebstore.google.com/detail/subwatch/eeihkpinianjgaklkiaolbapakiohggl" class="cta-button">Add to Chrome - It's Free</a>
+        </div>
+    </section>
 
-    <h2>Available Pages</h2>
-    <ul>
-        <li><a href="success.html">Success Page</a> - Payment successful redirect</li>
-        <li><a href="failure.html">Failure Page</a> - Payment failed redirect</li>
-    </ul>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-subtitle">Everything you need to take control of your recurring payments</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Detection</h3>
+                    <p>Automatically detects subscriptions as you browse Netflix, Spotify, Adobe, and more. No manual entry needed.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Smart Email Reminders</h3>
+                    <p>Get notified 3 days before each charge. Never miss a cancellation deadline again.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dashboard Overview</h3>
+                    <p>See all your subscriptions in one place. Track total monthly and yearly spending effortlessly.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy-First</h3>
+                    <p>End-to-end encryption for sensitive data. Your subscription information stays secure and private.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Expense Tracking</h3>
+                    <p>Visualize your subscription expenses and identify opportunities to save money.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Extraction</h3>
+                    <p>Powered by GPT-4o-mini to extract pricing, billing cycles, and next charge dates automatically.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>Usage</h2>
-    <p>These pages are used as redirect URLs for Viva Wallet payment processing:</p>
-    <ul>
-        <li><strong>Success URL:</strong> <code>https://cobrainike.github.io/subwatch/success.html</code></li>
-        <li><strong>Failure URL:</strong> <code>https://cobrainike.github.io/subwatch/failure.html</code></li>
-    </ul>
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Get started in minutes and take control of your subscriptions</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Install Extension</h3>
+                    <p>Add SubWatch to your Chrome browser and sign up with your email.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Browse Normally</h3>
+                    <p>Continue using your favorite services. Our AI detects subscriptions automatically.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Reminders</h3>
+                    <p>Receive email notifications before charges. Cancel unwanted subscriptions on time.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Save Money</h3>
+                    <p>Track spending, avoid forgotten charges, and stay in control of your budget.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>About SubWatch</h2>
-    <p>SubWatch is an AI-powered subscription tracker that helps you manage your recurring payments and avoid unwanted charges.</p>
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>$273</h3>
+                    <p>Average monthly subscription spending</p>
+                </div>
+                <div class="stat-item">
+                    <h3>$86</h3>
+                    <p>What people think they spend</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Automatic detection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Why Choose SubWatch?</h2>
+            <p class="section-subtitle">The smartest way to manage your recurring payments</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h4>✅ Stop Wasting Money</h4>
+                    <p>Never pay for subscriptions you forgot about. Get reminded before every charge.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>✅ Save Time</h4>
+                    <p>No manual tracking needed. AI does the heavy lifting automatically.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>✅ Stay Organized</h4>
+                    <p>All your subscriptions in one dashboard. Know exactly what you're paying for.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>✅ Catch Free Trials</h4>
+                    <p>Get reminded before your free trial converts to a paid subscription.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>✅ Budget Better</h4>
+                    <p>See your total subscription spending at a glance. Make informed decisions.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>✅ Peace of Mind</h4>
+                    <p>Never be surprised by unexpected charges again. Stay in control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Take Control?</h2>
+            <p>Join thousands of users who are saving money and staying organized</p>
+            <a href="https://chromewebstore.google.com/detail/subwatch/eeihkpinianjgaklkiaolbapakiohggl" class="cta-button">Get SubWatch Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SubWatch. Built with ❤️ for smarter subscription management by CoBrain P.C.</p>
+        </div>
+    </footer>
 </body>
 </html>
