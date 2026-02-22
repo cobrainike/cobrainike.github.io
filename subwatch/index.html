@@ -487,11 +487,16 @@
     <!-- UTM Analytics Tracking -->
     <script>
         // Track UTM impressions via a server-side Cloud Function.
-        // No Firebase config is exposed – the landing page only needs the public function URL.
+        // Session deduplication: only fires once per browser tab (sessionStorage guard).
         (async function trackUTMImpression() {
             const params = new URLSearchParams(window.location.search);
             const utmSource = params.get('utm_source');
             if (!utmSource) return;
+
+            // Don't count the same tab twice (e.g. user refreshes the page)
+            const sessionKey = 'sw_utm_tracked_' + utmSource;
+            if (sessionStorage.getItem(sessionKey)) return;
+            sessionStorage.setItem(sessionKey, '1');
 
             const utmMedium   = params.get('utm_medium')   || '-';
             const utmCampaign = params.get('utm_campaign') || '-';
