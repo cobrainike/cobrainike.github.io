@@ -483,5 +483,33 @@
             <p>&copy; 2026 SubWatch. Built with ❤️ for smarter subscription management by CoBrain P.C.</p>
         </div>
     </footer>
+
+    <!-- UTM Analytics Tracking -->
+    <script>
+        // Track UTM impressions via a server-side Cloud Function.
+        // No Firebase config is exposed – the landing page only needs the public function URL.
+        (async function trackUTMImpression() {
+            const params = new URLSearchParams(window.location.search);
+            const utmSource = params.get('utm_source');
+            if (!utmSource) return;
+
+            const utmMedium   = params.get('utm_medium')   || '-';
+            const utmCampaign = params.get('utm_campaign') || '-';
+
+            const endpoint = 'https://europe-west1-subscriptions-64efb.cloudfunctions.net/track_utm';
+
+            try {
+                await fetch(
+                    `${endpoint}?utm_source=${encodeURIComponent(utmSource)}` +
+                    `&utm_medium=${encodeURIComponent(utmMedium)}` +
+                    `&utm_campaign=${encodeURIComponent(utmCampaign)}`,
+                    { method: 'GET', keepalive: true }
+                );
+            } catch (err) {
+                // Non-critical – swallow silently so it never breaks the landing page
+                console.warn('[SubWatch] UTM tracking error:', err.message);
+            }
+        })();
+    </script>
 </body>
 </html>
