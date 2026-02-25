@@ -228,6 +228,32 @@
             line-height: 1.7;
         }
         
+        /* Video Demo Section */
+        .video-demo {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 860px;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
         /* Stats Section */
         .stats {
             padding: 60px 20px;
@@ -404,6 +430,23 @@
                     <h3>Save Money</h3>
                     <p>Track spending, avoid forgotten charges, and stay in control of your budget.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demo Section -->
+    <section class="video-demo">
+        <div class="container">
+            <h2 class="section-title">See It In Action</h2>
+            <p class="section-subtitle">Watch how SubWatch automatically detects and tracks your subscriptions</p>
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/3LkQtM98mT0"
+                    title="SubWatch - How It Works"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
             </div>
         </div>
     </section>
