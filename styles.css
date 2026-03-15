@@ -255,6 +255,88 @@ body {
     font-size: 1.1rem;
 }
 
+.platforms {
+    padding: var(--section-padding);
+    background: linear-gradient(180deg, rgba(17, 17, 24, 0.85), rgba(10, 10, 15, 1));
+    position: relative;
+}
+
+.platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.platform-card {
+    background: linear-gradient(180deg, rgba(22, 33, 62, 0.95), rgba(15, 23, 42, 0.95));
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-height: 100%;
+}
+
+.platform-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(37, 99, 235, 0.8);
+    box-shadow: var(--shadow-hover);
+}
+
+.platform-logo-wrap {
+    min-height: 120px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+}
+
+.platform-logo {
+    max-width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.platform-copy h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.platform-copy p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.platform-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+.platform-card-coming-soon {
+    border-style: dashed;
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.12), rgba(6, 182, 212, 0.08));
+}
+
+.platform-logo-placeholder {
+    background: radial-gradient(circle at top, rgba(124, 58, 237, 0.28), rgba(6, 182, 212, 0.12));
+}
+
+.platform-logo-placeholder i {
+    font-size: 3rem;
+    color: var(--text-primary);
+}
+
 /* Hero Visual */
 .hero-visual {
     position: relative;
