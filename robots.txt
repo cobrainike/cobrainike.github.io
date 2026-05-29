@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /subwatch/success.html
+Disallow: /subwatch/failure.html
+Disallow: /subwatch/google6458109e10e6e507.html
+Disallow: /subwatch/google86e0223ce500e02a.html
+
+Sitemap: https://cobrain.gr/sitemap.xml
